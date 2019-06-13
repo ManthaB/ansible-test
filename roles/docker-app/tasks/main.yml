@@ -1,0 +1,20 @@
+---
+
+
+- fail:
+    msg: network_name is not setted.
+  when: network_name == ""
+
+
+- name: build image
+  docker_image:
+    name: "{{ image_name }}"
+    path: roles/docker-app/files/
+
+
+- name: container run
+  docker_container:
+    name: "{{ container_name }}"
+    image: "{{ image_name }}"
+    networks:
+      - name: "{{ network_name }}"

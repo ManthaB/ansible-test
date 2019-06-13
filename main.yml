@@ -1,0 +1,26 @@
+---
+
+
+- hosts: localhost
+  connection: local
+
+  vars:
+    docker_network_name: testnet
+    docker_container_name1: testcont1
+    docker_container_name2: testcont2
+
+  pre_tasks:
+    - name: Create a docker network
+      docker_network:
+        name: "{{ docker_network_name }}"
+
+  roles:
+    - role: docker-app
+      vars:
+        container_name: "{{ docker_container_name1 }}"
+        network_name: "{{ docker_network_name }}"
+
+    - role: docker-app
+      vars:
+        container_name: "{{ docker_container_name2 }}"
+        network_name: "{{ docker_network_name }}"
